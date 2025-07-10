@@ -118,30 +118,30 @@ const CardioWrapped: React.FC<CardioWrappedProps> = ({
               `}>
                 That's equivalent to:
               </p>
-              <ul className="space-y-2">
-                {stats.totalDuration >= 60 && (
-                  <li className={`
-                    transition-colors duration-300 font-medium text-sm
-                    ${vibeClasses.text || (isDarkMode ? 'text-gray-300' : 'text-gray-700')}
-                  `}>
-                    • <span className={`font-black ${vibeClasses.accent || 'text-green-600'}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '0.1em' }}>
-                      {Math.floor(stats.totalDuration / 60)} hour{Math.floor(stats.totalDuration / 60) !== 1 ? 's' : ''} {stats.totalDuration % 60 > 0 ? `and ${stats.totalDuration % 60} minutes` : ''}
-                    </span> of continuous exercise
-                  </li>
-                )}
-                
-                {/* Historical and entertainment time equivalents */}
-                {getMultipleTimeEquivalents(stats.totalDuration, 3).map((equivalent, index) => (
+              <ul>
+                {/* Just show the closest time equivalent */}
+                {getMultipleTimeEquivalents(stats.totalDuration, 1).map((equivalent, index) => (
                   <li key={index} className={`
                     transition-colors duration-300 font-medium text-sm
                     ${vibeClasses.text || (isDarkMode ? 'text-gray-300' : 'text-gray-700')}
                   `}>
-                    • <span className={`font-black ${vibeClasses.accent || 'text-blue-600'}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '0.1em' }}>
+                    <span className={`font-black ${vibeClasses.accent || 'text-blue-600'}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '0.1em' }}>
                       {equivalent.name}
                     </span>
                     {equivalent.description && ` (${equivalent.description})`}
                   </li>
                 ))}
+                
+                {stats.totalDuration >= 60 && (
+                  <li className={`
+                    transition-colors duration-300 font-medium text-sm mt-1
+                    ${vibeClasses.text || (isDarkMode ? 'text-gray-300' : 'text-gray-700')}
+                  `}>
+                    <span className={`font-black ${vibeClasses.accent || 'text-green-600'}`} style={{ fontFamily: 'system-ui, -apple-system, sans-serif', letterSpacing: '0.1em' }}>
+                      {Math.floor(stats.totalDuration / 60)} hour{Math.floor(stats.totalDuration / 60) !== 1 ? 's' : ''} {stats.totalDuration % 60 > 0 ? `and ${stats.totalDuration % 60} minutes` : ''}
+                    </span> of continuous exercise
+                  </li>
+                )}
               </ul>
             </div>
           </div>
