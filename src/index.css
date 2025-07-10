@@ -1,0 +1,696 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Visual accessibility styles */
+:root {
+  --base-text-size: 16px;
+  --transition-duration: 0.3s;
+  --vibe-filter: none;
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+  --safe-area-inset-right: env(safe-area-inset-right);
+}
+
+/* iOS Safe Area Support */
+.safe-area-top {
+  padding-top: max(var(--safe-area-inset-top), 0px);
+}
+
+.safe-area-bottom {
+  padding-bottom: max(var(--safe-area-inset-bottom), 0px);
+}
+
+.safe-area-left {
+  padding-left: max(var(--safe-area-inset-left), 0px);
+}
+
+.safe-area-right {
+  padding-right: max(var(--safe-area-inset-right), 0px);
+}
+
+/* Mobile-First Responsive Design */
+.mobile-layout {
+  /* Mobile optimizations */
+  --touch-target-size: 44px;
+  --spacing-unit: 1rem;
+  --content-max-width: 100%;
+  --border-radius: 8px;
+  --font-size-base: 16px;
+}
+
+.desktop-layout {
+  /* Desktop optimizations */
+  --touch-target-size: 32px;
+  --spacing-unit: 1.5rem;
+  --content-max-width: 1200px;
+  --border-radius: 6px;
+  --font-size-base: 14px;
+}
+
+/* Touch-Optimized Components */
+.touch-target {
+  min-height: var(--touch-target-size);
+  min-width: var(--touch-target-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile-specific button styles */
+body.screen-smartphone button {
+  min-height: 44px;
+  padding: 12px 16px;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+body.screen-smartphone button:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+body.screen-desktop button {
+  min-height: 36px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+/* Mobile-specific input styles */
+body.screen-smartphone input, 
+body.screen-smartphone select, 
+body.screen-smartphone textarea {
+  min-height: 44px;
+  padding: 12px 16px;
+  font-size: 16px; /* Prevents zoom on iOS */
+  border-radius: 8px;
+}
+
+body.screen-desktop input, 
+body.screen-desktop select, 
+body.screen-desktop textarea {
+  min-height: 36px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+/* Scrollbar hiding for mobile */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile navigation optimizations */
+body.screen-smartphone .nav-tabs {
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+
+body.screen-smartphone .nav-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+body.screen-smartphone .nav-tabs > * {
+  scroll-snap-align: start;
+}
+
+/* Mobile card spacing */
+body.screen-smartphone .card-grid {
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+body.screen-desktop .card-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Mobile modal optimizations */
+body.screen-smartphone .modal {
+  margin: 0.5rem;
+  max-height: calc(100vh - 1rem);
+  border-radius: 12px;
+}
+
+body.screen-desktop .modal {
+  margin: 2rem auto;
+  max-width: 600px;
+  max-height: calc(100vh - 4rem);
+  border-radius: 8px;
+}
+
+/* Touch feedback */
+.touch-feedback:active {
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: scale(0.98);
+}
+
+/* Improved tap targets for mobile */
+body.screen-smartphone .tap-target {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px;
+}
+
+/* Mobile typography scaling */
+body.screen-smartphone {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body.screen-smartphone h1 {
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+body.screen-smartphone h2 {
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+body.screen-smartphone h3 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+/* Desktop typography */
+body.screen-desktop {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+body.screen-desktop h1 {
+  font-size: 1.75rem;
+  line-height: 1.2;
+}
+
+body.screen-desktop h2 {
+  font-size: 1.5rem;
+  line-height: 1.3;
+}
+
+body.screen-desktop h3 {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+/* iOS-Style Drag and Drop Animations */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-1deg); }
+  75% { transform: rotate(1deg); }
+}
+
+.wiggle-animation {
+  animation: wiggle 0.3s ease-in-out infinite;
+}
+
+/* Mobile drag feedback */
+.mobile-drag-active {
+  transform: scale(1.1) rotate(2deg);
+  opacity: 0.9;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  transition: none !important;
+}
+
+.mobile-drag-placeholder {
+  opacity: 0.3;
+  transform: scale(0.95);
+}
+
+/* Prevent text selection during drag */
+.drag-mode {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Gesture support */
+.swipeable {
+  touch-action: pan-y;
+  user-select: none;
+}
+
+/* Enhanced touch targets for mobile drag */
+body.screen-smartphone .drag-handle {
+  min-height: 48px;
+  min-width: 48px;
+  touch-action: none;
+}
+
+/* iOS-specific optimizations */
+@supports (-webkit-touch-callout: none) {
+  /* iOS Safari specific styles */
+  body.screen-smartphone input[type="number"] {
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
+  }
+  
+  body.screen-smartphone input[type="number"]::-webkit-outer-spin-button,
+  body.screen-smartphone input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Prevent iOS zoom on input focus */
+  body.screen-smartphone input,
+  body.screen-smartphone select,
+  body.screen-smartphone textarea {
+    font-size: 16px !important;
+  }
+  
+  /* iOS safe area handling */
+  .ios-safe-area {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  /* Disable iOS bounce scrolling during drag */
+  .drag-mode {
+    -webkit-overflow-scrolling: auto;
+    overflow: hidden;
+  }
+}
+
+/* Prevent horizontal overflow on mobile */
+body.screen-smartphone {
+  overflow-x: hidden;
+}
+
+body.screen-smartphone * {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Ensure full height on mobile */
+html, body {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Vibe-specific global styles */
+body.vibe-y2k-cyber {
+  background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #001a33 100%);
+}
+
+body.vibe-y2k-cyber * {
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+/* LOCKED IN Vibe Styles */
+body.vibe-locked-in {
+  background: linear-gradient(135deg, #000000 0%, #4c0000 50%, #1a0000 100%);
+}
+
+body.vibe-locked-in * {
+  text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+}
+
+/* LOCKED IN Jagged Button Styles */
+body.vibe-locked-in button {
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+  border: 2px solid rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.2), inset 0 0 15px rgba(255, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+body.vibe-locked-in button:hover {
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.4), inset 0 0 25px rgba(255, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+body.vibe-locked-in button:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.6), inset 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+/* LOCKED IN Jagged Input Styles */
+body.vibe-locked-in input,
+body.vibe-locked-in select,
+body.vibe-locked-in textarea {
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px), 0 6px);
+  border: 2px solid rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.1);
+}
+
+body.vibe-locked-in input:focus,
+body.vibe-locked-in select:focus,
+body.vibe-locked-in textarea:focus {
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+  border-color: rgba(255, 0, 0, 0.6);
+}
+
+/* LOCKED IN Jagged Card Styles */
+body.vibe-locked-in .card,
+body.vibe-locked-in [class*="bg-gray-8"],
+body.vibe-locked-in [class*="bg-white"] {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+  border: 1px solid rgba(255, 0, 0, 0.2);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.1);
+}
+
+/* LOCKED IN Progress Bars */
+body.vibe-locked-in .progress-bar,
+body.vibe-locked-in [class*="bg-blue-"],
+body.vibe-locked-in [class*="bg-green-"],
+body.vibe-locked-in [class*="bg-purple-"] {
+  clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px), 0 4px);
+}
+
+/* Y2K Cyber specific effects */
+body.vibe-y2k-cyber .glow-effect {
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5), inset 0 0 20px rgba(0, 255, 255, 0.1);
+}
+
+body.vibe-y2k-cyber .neon-border {
+  border: 1px solid rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+}
+
+/* LOCKED IN specific effects */
+body.vibe-locked-in .glow-effect {
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.1);
+}
+
+body.vibe-locked-in .aggressive-border {
+  border: 2px solid rgba(255, 0, 0, 0.6);
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+}
+
+/* Jagged clip-path utility classes for LOCKED IN */
+.clip-path-jagged {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+}
+
+.clip-path-jagged-small {
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% calc(100% - 5px), calc(100% - 5px) 100%, 5px 100%, 0 calc(100% - 5px), 0 5px);
+}
+
+.clip-path-jagged-button {
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+}
+
+.clip-path-jagged-bar {
+  clip-path: polygon(0 0, calc(100% - 3px) 0, 100% 3px, 100% calc(100% - 3px), calc(100% - 3px) 100%, 3px 100%, 0 calc(100% - 3px), 0 3px);
+}
+
+.clip-path-jagged-pill {
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+}
+
+/* Colorblind mode styles */
+.protanopia .text-red-500,
+.protanopia .text-red-600 {
+  @apply text-blue-600;
+}
+
+.protanopia .text-green-500,
+.protanopia .text-green-600 {
+  @apply text-yellow-600;
+}
+
+.protanopia .bg-red-500,
+.protanopia .bg-red-600 {
+  @apply bg-blue-600;
+}
+
+.protanopia .bg-green-500,
+.protanopia .bg-green-600 {
+  @apply bg-yellow-600;
+}
+
+.deuteranopia .text-red-500,
+.deuteranopia .text-red-600 {
+  @apply text-orange-600;
+}
+
+.deuteranopia .text-green-500,
+.deuteranopia .text-green-600 {
+  @apply text-blue-600;
+}
+
+.deuteranopia .bg-red-500,
+.deuteranopia .bg-red-600 {
+  @apply bg-orange-600;
+}
+
+.deuteranopia .bg-green-500,
+.deuteranopia .bg-green-600 {
+  @apply bg-blue-600;
+}
+
+.tritanopia .text-red-500,
+.tritanopia .text-red-600 {
+  @apply text-red-700;
+}
+
+.tritanopia .text-green-500,
+.tritanopia .text-green-600 {
+  @apply text-green-700;
+}
+
+.tritanopia .bg-red-500,
+.tritanopia .bg-red-600 {
+  @apply bg-red-700;
+}
+
+.tritanopia .bg-green-500,
+.tritanopia .bg-green-600 {
+  @apply bg-blue-600;
+}
+
+.monochrome * {
+  filter: grayscale(100%) contrast(150%);
+}
+
+/* High contrast mode */
+.high-contrast {
+  filter: contrast(150%) brightness(1.2);
+}
+
+.high-contrast .text-gray-500,
+.high-contrast .text-gray-600,
+.high-contrast .text-gray-400 {
+  @apply text-black;
+}
+
+.high-contrast.dark .text-gray-500,
+.high-contrast.dark .text-gray-600,
+.high-contrast.dark .text-gray-400 {
+  @apply text-white;
+}
+
+/* Reduced motion */
+.transition-none * {
+  transition: none !important;
+  animation: none !important;
+}
+
+/* Base text size override */
+body {
+  font-size: var(--base-text-size);
+}
+
+/* Smooth vibe transitions */
+* {
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+}
+
+/* Mobile-specific responsive utilities */
+@media (max-width: 640px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+  
+  .mobile-full-width {
+    width: 100% !important;
+  }
+  
+  .mobile-text-center {
+    text-align: center !important;
+  }
+  
+  .mobile-stack {
+    flex-direction: column !important;
+  }
+  
+  .mobile-space-y-2 > * + * {
+    margin-top: 0.5rem !important;
+  }
+  
+  .mobile-space-y-4 > * + * {
+    margin-top: 1rem !important;
+  }
+  
+  /* Compact header for mobile */
+  .mobile-header {
+    padding: 0.5rem 1rem !important;
+  }
+  
+  .mobile-header h1 {
+    font-size: 1.25rem !important;
+  }
+  
+  /* Compact tabs for mobile */
+  .mobile-tabs {
+    padding: 0.5rem !important;
+  }
+  
+  .mobile-tabs button {
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.75rem !important;
+    min-width: 80px !important;
+  }
+}
+
+@media (min-width: 641px) {
+  .hide-on-desktop {
+    display: none !important;
+  }
+}
+
+/* Performance optimizations */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Smooth scrolling for mobile */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent text selection on mobile UI elements */
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Mobile-optimized focus states */
+body.screen-smartphone *:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+body.screen-desktop *:focus {
+  outline: 1px solid #3b82f6;
+  outline-offset: 1px;
+}
+
+/* Loading states for mobile */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Dark mode loading shimmer */
+.dark .loading-shimmer {
+  background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+  background-size: 200% 100%;
+}
+
+/* Text truncation utilities */
+.truncate-mobile {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive text sizing */
+@media (max-width: 640px) {
+  .responsive-text-sm {
+    font-size: 0.75rem !important;
+  }
+  
+  .responsive-text-base {
+    font-size: 0.875rem !important;
+  }
+  
+  .responsive-text-lg {
+    font-size: 1rem !important;
+  }
+  
+  .responsive-text-xl {
+    font-size: 1.125rem !important;
+  }
+}
+
+/* Ensure content doesn't get cut off */
+.content-container {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Mobile viewport fixes */
+@media screen and (max-width: 640px) {
+  body {
+    width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  .container {
+    width: 100%;
+    max-width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Prevent zoom on iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  select,
+  textarea,
+  input[type="text"],
+  input[type="password"],
+  input[type="datetime"],
+  input[type="datetime-local"],
+  input[type="date"],
+  input[type="month"],
+  input[type="time"],
+  input[type="week"],
+  input[type="number"],
+  input[type="email"],
+  input[type="url"],
+  input[type="search"],
+  input[type="tel"],
+  input[type="color"] {
+    font-size: 16px !important;
+  }
+}
